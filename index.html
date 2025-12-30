@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sمختبر سامكو للاعلانات والكابشن</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Expanded Collection) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@200;400;700;900&family=El+Messiri:wght@400;700&family=Lalezar&family=Rakkas&family=Tajawal:wght@300;400;700;900&family=Oswald:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                        cairo: ['Cairo', 'sans-serif'],
+                        amiri: ['Amiri', 'serif'],
+                        elmessiri: ['El Messiri', 'sans-serif'],
+                        lalezar: ['Lalezar', 'cursive'],
+                        almarai: ['Almarai', 'sans-serif'],
+                        rakkas: ['Rakkas', 'serif'],
+                        oswald: ['Oswald', 'sans-serif'],
+                        playfair: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                        'aurora': 'aurora 20s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'gradient-x': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            },
+                        },
+                        'aurora': {
+                            '0%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                            '100%': { backgroundPosition: '0% 50%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.5);
+        }
+
+        /* --- THEMES --- */
+        .bg-theme-cyber { background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e); background-size: 400% 400%; animation: gradient-x 15s ease infinite; }
+        .bg-theme-ocean { background: linear-gradient(180deg, #141E30 0%, #243B55 100%); }
+        .bg-theme-sunset { background: linear-gradient(to right, #DA22FF, #9733EE); background-size: 200% 200%; animation: gradient-x 10s ease infinite; }
+        .bg-theme-aurora { background: linear-gradient(45deg, #3a1c71, #d76d77, #ffaf7b); background-size: 300% 300%; animation: aurora 12s ease infinite; }
+        .bg-theme-golden { background: radial-gradient(circle at center, #2b2b2b 0%, #000000 100%); position: relative; }
+        .bg-theme-golden::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, transparent 45%, rgba(212, 175, 55, 0.1) 50%, transparent 55%); background-size: 200% 200%; animation: gradient-x 8s linear infinite; pointer-events: none; }
+        .bg-theme-matrix { background-color: #000; background-image: radial-gradient(#0aff0a 1px, transparent 1px), radial-gradient(#0aff0a 1px, transparent 1px); background-size: 40px 40px; background-position: 0 0, 20px 20px; animation: aurora 60s linear infinite; }
+        .bg-theme-minimal { background: #f3f4f6; color: #1f2937; }
+
+        /* Glassmorphism */
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .glass-strong { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        
+        .bg-theme-minimal .glass { background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0,0,0,0.05); color: #1f2937; }
+        .bg-theme-minimal .glass-strong { background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(0,0,0,0.1); color: #1f2937; }
+        .bg-theme-minimal .text-white { color: #1f2937 !important; }
+        .bg-theme-minimal .text-gray-300 { color: #4b5563 !important; }
+
+        .social-btn { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .social-btn:hover { transform: translateY(-5px) scale(1.1); }
+        .social-btn:active { transform: scale(0.95); }
+
+        /* Range Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+        }
+
+        /* Toast */
+        #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 9999; left: 50%; bottom: 30px; transform: translateX(-50%); box-shadow: 0 4px 15px rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s, bottom 0.3s; }
+        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+        
+        /* Dropdown */
+        .dropdown-menu { transform-origin: top left; transition: transform 0.2s ease-out, opacity 0.2s ease-out, visibility 0.2s; opacity: 0; visibility: hidden; transform: scale(0.95); }
+        .dropdown-menu.active { opacity: 1; visibility: visible; transform: scale(1); }
+    </style>
+</head>
+<body id="app-body" class="bg-theme-cyber text-white font-sans min-h-screen transition-colors duration-500 overflow-x-hidden relative" onclick="closeDropdowns(event)">
+
+    <!-- Background Elements -->
+    <div id="bg-elements" class="fixed inset-0 pointer-events-none overflow-hidden z-0 opacity-30">
+        <div class="absolute top-10 left-10 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-float"></div>
+        <div class="absolute bottom-10 right-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-float" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse-slow"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative z-10 container mx-auto px-4 py-6 min-h-screen flex flex-col">
+        
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row justify-between items-center mb-8 glass-strong rounded-2xl p-4 shadow-lg fixed top-6 left-4 right-4 z-50 md:static md:w-full md:m-0 md:mb-8">
+            <div class="flex items-center gap-3 mb-4 md:mb-0 cursor-pointer" onclick="navigate('home')">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-yellow-400 to-red-500 flex items-center justify-center text-2xl shadow-lg hover:scale-110 transition">
+                    <i class="fa-solid fa-flask"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-wider">Samco Caption Lab</h1>
+                    <p class="text-xs text-gray-300 opacity-80">"خلّ الكابشن يخدم الفيديو"</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button onclick="navigate('home')" class="glass px-4 py-2 rounded-lg hover:bg-white/20 transition text-sm active:scale-95">
+                    <i class="fa-solid fa-home"></i> الرئيسية
+                </button>
+
+                <div class="relative">
+                    <button id="theme-btn" onclick="toggleThemeMenu(event)" class="flex items-center gap-2 glass px-4 py-2 rounded-lg hover:bg-white/20 transition active:scale-95 border border-white/10">
+                        <i class="fa-solid fa-palette text-yellow-400"></i>
+                        <span class="hidden md:inline">الثيم</span>
+                        <i class="fa-solid fa-chevron-down text-xs mr-1 opacity-70"></i>
+                    </button>
+                    <div id="theme-menu" class="dropdown-menu absolute left-0 mt-2 w-48 glass-strong rounded-xl shadow-2xl overflow-hidden z-[100] border border-white/10 backdrop-blur-xl">
+                        <div class="p-2 space-y-1">
+                            <button onclick="setTheme('cyber')" class="w-full text-right px-3 py-2 rounded-lg hover:bg-white/10 text-sm flex items-center gap-2 transition group"><span class="w-3 h-3 rounded-full bg-indigo-500"></span> 🌌 سيبر نيون</button>
+                            <button onclick="setTheme('aurora')" class="w-full text-right px-3 py-2 rounded-lg hover:bg-white/10 text-sm flex items-center gap-2 transition group"><span class="w-3 h-3 rounded-full bg-pink-400"></span> 🔮 شفق أورورا</button>
+                            <button onclick="setTheme('golden')" class="w-full text-right px-3 py-2 rounded-lg hover:bg-white/10 text-sm flex items-center gap-2 transition group"><span class="w-3 h-3 rounded-full bg-yellow-600"></span> 👑 فخامة ذهبية</button>
+                            <button onclick="setTheme('matrix')" class="w-full text-right px-3 py-2 rounded-lg hover:bg-white/10 text-sm flex items-center gap-2 transition group"><span class="w-3 h-3 rounded-full bg-green-500"></span> 📟 مصفوفة رقمية</button>
+                            <button onclick="setTheme('ocean')" class="w-full text-right px-3 py-2 rounded-lg hover:bg-white/10 text-sm flex items-center gap-2 transition group"><span class="w-3 h-3 rounded-full bg-blue-600"></span> 🌊 محيط عميق</button>
+                            <button onclick="setTheme('sunset')" class="w-full text-right px-3 py-2 rounded-lg hover:bg-white/10 text-sm flex items-center gap-2 transition group"><span class="w-3 h-3 rounded-full bg-orange-500"></span> 🌅 غروب دافئ</button>
+                            <div class="h-px bg-white/10 my-1"></div>
+                            <button onclick="setTheme('minimal')" class="w-full text-right px-3 py-2 rounded-lg hover:bg-white/10 text-sm flex items-center gap-2 transition group"><span class="w-3 h-3 rounded-full bg-gray-200"></span> 📄 ورقي رسمي</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Content Area -->
+        <main id="main-content" class="flex-grow flex flex-col gap-6">
+            <!-- Content Injected via JS -->
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-auto pt-8 pb-20 md:pb-0">
+            <div class="glass-strong rounded-2xl p-6 text-center">
+                <div class="flex justify-center items-center gap-2 mb-4 animate-pulse">
+                    <i class="fa-solid fa-wand-magic-sparkles text-yellow-400"></i>
+                    <p class="font-bold">تابع "سامكو" للمزيد من الأدوات الإبداعية</p>
+                    <i class="fa-solid fa-wand-magic-sparkles text-yellow-400"></i>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-4 mb-6">
+                    <a href="https://x.com/designer_samco?s=21&t=dbffdoGcvgOluktAOa9LHA" target="_blank" class="social-btn w-12 h-12 rounded-full bg-black flex items-center justify-center text-white text-xl shadow-lg border border-gray-700"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://www.tiktok.com/@samco_designer?_t=ZS-90FZRdOXUiG&_r=1" target="_blank" class="social-btn w-12 h-12 rounded-full bg-black flex items-center justify-center text-white text-xl shadow-lg border border-gray-700" style="background: linear-gradient(45deg, #000000, #25F4EE, #FE2C55);"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/samco_design?igsh=MXhiN2RjbG1ydHducg%3D%3D&utm_source=qr" target="_blank" class="social-btn w-12 h-12 rounded-full flex items-center justify-center text-white text-xl shadow-lg" style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@samco-desing" target="_blank" class="social-btn w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white text-xl shadow-lg"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+
+                <button onclick="navigate('home')" class="text-sm text-gray-400 hover:text-white transition underline decoration-dotted">العودة للصفحة الرئيسية</button>
+                <p class="text-xs text-gray-500 mt-2">© 2025 Samco Design. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Hidden Canvas for Image Generation -->
+    <canvas id="generator-canvas" class="hidden"></canvas>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="flex items-center justify-center gap-2 font-bold glass-strong">
+        <i class="fa-solid fa-check-circle text-green-400"></i>
+        <span id="toast-message">تم!</span>
+    </div>
+
+    <script>
+        // --- State Management ---
+        const state = {
+            currentPage: 'home',
+            savedCaptions: [],
+            theme: 'cyber',
+            currentTemplateCategory: 'ad',
+            settings: {
+                aspectRatio: '1:1', // 1:1, 9:16, 16:9, 4:5
+                fontFamily: 'Tajawal',
+                fontSize: 60
+            }
+        };
+
+        const fonts = [
+            { name: 'تجوال (Tajawal)', val: 'Tajawal' },
+            { name: 'القاهرة (Cairo)', val: 'Cairo' },
+            { name: 'المراعي (Almarai)', val: 'Almarai' },
+            { name: 'أميري (Amiri)', val: 'Amiri' },
+            { name: 'المسيري (El Messiri)', val: 'El Messiri' },
+            { name: 'لاليزار (Lalezar)', val: 'Lalezar' },
+            { name: 'رقاص (Rakkas)', val: 'Rakkas' },
+            { name: 'Oswald', val: 'Oswald' },
+            { name: 'Playfair', val: 'Playfair Display' }
+        ];
+
+        // --- Data (Same as before) ---
+        const templates = {
+            ad: [
+                "🔥 عرض لا يُفوّت! احصل على [المنتج] الآن بسعر خيالي. الكمية محدودة! 🏃‍♂️💨",
+                "💡 هل تبحث عن الحل الأمثل لـ [المشكلة]؟ جرب [المنتج] واشعر بالفرق. ✨",
+                "🚀 ارفع مستوى تجربتك مع [الاسم]. الجودة تتحدث عن نفسها. اطلب الآن 👇",
+                "💎 استثمر في نفسك مع [المنتج]. الرفاهية التي تستحقها أصبحت بين يديك.",
+                "🛒 تسوق الآن واحصل على خصم خاص لفترة محدودة! لا تضيع الفرصة."
+            ],
+            cinematic: [
+                "🎥 خلف كل لحظة صمت، ألف قصة لم تُروَ بعد... #سينما",
+                "✨ اللحظات الصغيرة هي التي تصنع الذكريات الكبيرة. شاهد للنهاية 🎬",
+                "🌑 ليس مجرد فيديو، إنها رحلة بصرية. استمتع بالتفاصيل.",
+                "🎬 الأضواء، الكاميرا، وأنت البطل. مشهد يلخص الكثير من المشاعر."
+            ],
+            comedy: [
+                "😂 شكلي لما أحاول أكون جدي ويفشل الموضوع... منشن صاحبك اللي كذا!",
+                "🤡 وضعي حالياً وأنا أحاول أخلص الشغل قبل الديدلاين بدقيقة...",
+                "🌚 لما تطلب أكل وتكتشف إنك نسيته في المطعم... #ضحك #مواقف",
+                "🤣 يقولون الصبر مفتاح الفرج، بس شكلي ضيعت النسخة...!"
+            ],
+            formal: [
+                "📢 إعلان هام: نعلن عن إطلاق خدماتنا الجديدة لعملائنا الكرام.",
+                "🤝 نسعد دائماً بخدمتكم وتقديم الأفضل. شكراً لثقتكم المستمرة.",
+                "📈 خطوة جديدة نحو النجاح. شاركونا آراءكم في التعليقات."
+            ],
+            education: [
+                "📚 معلومة سريعة: هل تعلم أن [الموضوع] يساعد في تحسين [النتيجة]؟",
+                "🧠 3 خطوات بسيطة لتعلم [المهارة]. احفظ الفيديو لتطبقه لاحقاً!",
+                "💡 السر في النجاح هو الاستمرارية، إليك نصيحة اليوم..."
+            ],
+            quotes: [
+                "✨ \"النجاح لا يأتي بالصدفة، بل بالعمل الشاق.\" - حكمة اليوم",
+                "🌟 كن أنت التغيير الذي تريد أن تراه في العالم.",
+                "🍃 لا تنتظر الفرصة، بل اصنعها بنفسك."
+            ],
+            sports: [
+                "⚽️ مباراة للتاريخ! لحظات لن تتكرر في عالم المستديرة.",
+                "🏋️‍♂️ الألم مؤقت، والمجد دائم. استمر في التمرين!"
+            ],
+            tech: [
+                "📱 مراجعة سريعة لأحدث هواتف [الشركة]. هل يستحق الشراء؟",
+                "💻 5 اختصارات في الكيبورد ستوفر عليك ساعات من العمل!"
+            ],
+            food: [
+                "🍔 الجوع كافر! مين يقدر يقاوم هذا المنظر؟ 😋",
+                "☕️ قهوة الصباح هي بداية كل قصة نجاح. صباح الخير!"
+            ]
+        };
+
+        const hashtags = {
+            ad: "#عروض #تسوق #خصومات #السعودية #ترند",
+            cinematic: "#تصوير #مونتاج #سينمائي #اكسبلور #فن",
+            comedy: "#ضحك #وناسة #كوميديا #ميمز #طقطقة",
+            formal: "#بيان #رسمي #أعمال #بيزنس #تطوير",
+            education: "#تعليم #معلومات #ثقافة #تطوير_الذات #نصائح",
+            quotes: "#اقتباسات #حكم #إلهام #خواطر #كلمات",
+            sports: "#رياضة #كرة_قدم #لياقة #جيم #صحة",
+            tech: "#تقنية #تكنولوجيا #برمجة #جوالات #تطبيقات",
+            food: "#طبخ #أكل #مطاعم #وصفات #لذيذ"
+        };
+
+        const ctas = [
+            "🔗 الرابط في البايو",
+            "👇 شاركنا رأيك في التعليقات",
+            "💾 احفظ الفيديو لترجع له بعدين",
+            "📤 أرسل الفيديو لشخص يحتاج يشوفه"
+        ];
+
+        // --- Core Functions ---
+
+        function init() {
+            loadState();
+            const savedTheme = localStorage.getItem('samcoTheme');
+            if (savedTheme) setTheme(savedTheme);
+            render();
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem('samcoCaptions');
+            if (saved) state.savedCaptions = JSON.parse(saved);
+        }
+
+        function saveState() {
+            localStorage.setItem('samcoCaptions', JSON.stringify(state.savedCaptions));
+        }
+
+        function toggleThemeMenu(event) {
+            event.stopPropagation();
+            const menu = document.getElementById('theme-menu');
+            menu.classList.toggle('active');
+        }
+        
+        function toggleFontMenu(event) {
+            event.stopPropagation();
+            const menu = document.getElementById('font-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function closeDropdowns(event) {
+            const themeMenu = document.getElementById('theme-menu');
+            const themeBtn = document.getElementById('theme-btn');
+            if (!themeMenu.contains(event.target) && !themeBtn.contains(event.target)) {
+                themeMenu.classList.remove('active');
+            }
+            
+            // Close Font Menu if clicked outside
+            const fontMenu = document.getElementById('font-menu');
+            const fontBtn = document.getElementById('font-btn');
+            if (fontMenu && fontBtn && !fontMenu.contains(event.target) && !fontBtn.contains(event.target)) {
+                fontMenu.classList.add('hidden');
+            }
+        }
+
+        function setTheme(themeName) {
+            state.theme = themeName;
+            localStorage.setItem('samcoTheme', themeName);
+            const body = document.getElementById('app-body');
+            const themes = ['cyber', 'ocean', 'sunset', 'minimal', 'aurora', 'golden', 'matrix'];
+            themes.forEach(t => body.classList.remove(`bg-theme-${t}`));
+            body.classList.add(`bg-theme-${themeName}`);
+            document.getElementById('theme-menu').classList.remove('active');
+        }
+
+        function navigate(page) {
+            state.currentPage = page;
+            render();
+            window.scrollTo(0, 0);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg;
+            toast.className = "show glass-strong";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        // --- Settings Helpers ---
+        function setFont(fontName) {
+            state.settings.fontFamily = fontName;
+            document.getElementById('font-btn-text').innerText = fontName;
+            document.getElementById('font-menu').classList.add('hidden');
+            // Trigger image redraw if image exists
+            const imgPreview = document.getElementById('image-preview');
+            if(!imgPreview.classList.contains('hidden')) triggerImageGen();
+        }
+
+        function setFontSize(val) {
+            state.settings.fontSize = parseInt(val);
+            document.getElementById('font-size-val').innerText = val + 'px';
+            // Trigger image redraw if image exists
+            const imgPreview = document.getElementById('image-preview');
+            if(!imgPreview.classList.contains('hidden')) triggerImageGen();
+        }
+        
+        function setAspectRatio(ratio) {
+            state.settings.aspectRatio = ratio;
+            render(); // Re-render to update UI active state
+            // Short delay then regenerate
+            setTimeout(() => {
+                const imgPreview = document.getElementById('image-preview');
+                if(!imgPreview.classList.contains('hidden')) triggerImageGen();
+            }, 100);
+        }
+
+        // --- Image Generation Logic (Canvas) ---
+        function generateCanvasImage(text) {
+            const canvas = document.getElementById('generator-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set dimensions based on Aspect Ratio
+            let width = 1080;
+            let height = 1080;
+            
+            switch(state.settings.aspectRatio) {
+                case '1:1': height = 1080; break;
+                case '9:16': height = 1920; break;
+                case '16:9': height = 607; break; // Approx 1080 * 9/16
+                case '4:5': height = 1350; break;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+
+            // 1. DYNAMIC RANDOM Background
+            const randomHue = Math.floor(Math.random() * 360);
+            const randomAngle = Math.floor(Math.random() * 360);
+            
+            const gradient = ctx.createLinearGradient(0, 0, 
+                width * Math.cos(randomAngle * Math.PI / 180), 
+                height * Math.sin(randomAngle * Math.PI / 180)
+            );
+            
+            const color1 = `hsl(${randomHue}, 70%, 20%)`;
+            const color2 = `hsl(${(randomHue + 40) % 360}, 80%, 40%)`;
+            const color3 = `hsl(${(randomHue + 180) % 360}, 60%, 15%)`;
+
+            gradient.addColorStop(0, color1);
+            gradient.addColorStop(0.5, color2);
+            gradient.addColorStop(1, color3);
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            // 2. Random Geometric Shapes Overlay
+            ctx.fillStyle = "rgba(255, 255, 255, 0.03)";
+            const shapeType = Math.floor(Math.random() * 3);
+
+            for(let i=0; i<30; i++) {
+                const x = Math.random() * width;
+                const y = Math.random() * height;
+                const size = Math.random() * 200;
+
+                ctx.beginPath();
+                if (shapeType === 0) {
+                    ctx.arc(x, y, size, 0, Math.PI*2);
+                } else if (shapeType === 1) {
+                    ctx.rect(x, y, size, size);
+                } else {
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x + size, y + size);
+                    ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+                    ctx.lineWidth = 5;
+                    ctx.stroke();
+                }
+                ctx.fill();
+            }
+
+            // 3. Add Logo/Watermark
+            ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+            ctx.font = "bold 24px 'Arial'"; // Keep watermark font simple
+            ctx.textAlign = "center";
+            ctx.fillText("Samco Caption Lab", width/2, height - 40);
+
+            // 4. Draw Text (User Settings)
+            ctx.fillStyle = "#ffffff";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            
+            // Use User's Font and Size
+            ctx.font = `bold ${state.settings.fontSize}px '${state.settings.fontFamily}'`; 
+            
+            // Text Wrapping Logic
+            const maxWidth = width * 0.85; // 85% of width
+            const lineHeight = state.settings.fontSize * 1.5;
+            const words = text.split(' ');
+            let line = '';
+            let lines = [];
+
+            const paragraphs = text.split('\n');
+            
+            paragraphs.forEach(para => {
+                const paraWords = para.split(' ');
+                line = '';
+                for(let n = 0; n < paraWords.length; n++) {
+                    const testLine = line + paraWords[n] + ' ';
+                    const metrics = ctx.measureText(testLine);
+                    const testWidth = metrics.width;
+                    if (testWidth > maxWidth && n > 0) {
+                        lines.push(line);
+                        line = paraWords[n] + ' ';
+                    } else {
+                        line = testLine;
+                    }
+                }
+                lines.push(line);
+            });
+
+            // Center vertically
+            let y = (height/2) - ((lines.length * lineHeight) / 2);
+
+            // Shadow
+            ctx.shadowColor = "rgba(0,0,0,0.8)";
+            ctx.shadowBlur = 15;
+            ctx.shadowOffsetX = 4;
+            ctx.shadowOffsetY = 4;
+
+            for(let k = 0; k < lines.length; k++) {
+                ctx.fillText(lines[k], width/2, y + (k*lineHeight));
+            }
+
+            // Show preview
+            const dataURL = canvas.toDataURL('image/png');
+            const previewImg = document.getElementById('image-preview');
+            previewImg.src = dataURL;
+            previewImg.classList.remove('hidden');
+        }
+
+        function downloadImage() {
+            const canvas = document.getElementById('generator-canvas');
+            const link = document.createElement('a');
+            link.download = `samco-caption-${Date.now()}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+            showToast("جاري تحميل الصورة... 🖼️");
+        }
+
+        // --- Render Functions ---
+
+        function render() {
+            const content = document.getElementById('main-content');
+            content.innerHTML = '';
+            
+            const wrapperClass = "animate-[fadeIn_0.5s_ease-out] mt-40 md:mt-64";
+
+            let html = `<div class="${wrapperClass}">`;
+
+            switch (state.currentPage) {
+                case 'home': html += renderHomeContent(); break;
+                case 'generator': html += renderGeneratorContent(); break;
+                case 'library': html += renderLibraryContent(); break;
+                case 'favorites': html += renderFavoritesContent(); break;
+                case 'schedule': html += renderScheduleContent(); break;
+                case 'about': html += renderAboutContent(); break;
+            }
+            
+            html += `</div>`;
+            content.innerHTML = html;
+        }
+
+        function renderHomeContent() {
+            return `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div onclick="navigate('generator')" class="glass hover:bg-white/10 p-8 rounded-2xl cursor-pointer transition transform hover:scale-[1.02] flex flex-col items-center justify-center text-center gap-4 border-2 border-transparent hover:border-yellow-400 group">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-3xl shadow-lg group-hover:animate-spin-slow">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold">مولّد الكابشن + صور</h2>
+                        <p class="text-gray-300">اصنع كابشن وصورة بالذكاء الاصطناعي في ثوانٍ</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div onclick="navigate('library')" class="glass hover:bg-white/10 p-6 rounded-2xl cursor-pointer transition transform hover:scale-105 flex flex-col items-center justify-center text-center gap-2">
+                            <i class="fa-solid fa-layer-group text-3xl text-green-400"></i>
+                            <h3 class="font-bold">المكتبة</h3>
+                        </div>
+                        <div onclick="navigate('favorites')" class="glass hover:bg-white/10 p-6 rounded-2xl cursor-pointer transition transform hover:scale-105 flex flex-col items-center justify-center text-center gap-2">
+                            <i class="fa-solid fa-heart text-red-500"></i>
+                            <h3 class="font-bold">المفضلة</h3>
+                        </div>
+                        <div onclick="navigate('about')" class="glass hover:bg-white/10 p-6 rounded-2xl cursor-pointer transition transform hover:scale-105 flex flex-col items-center justify-center text-center gap-2">
+                            <i class="fa-solid fa-user-astronaut text-3xl text-blue-400"></i>
+                            <h3 class="font-bold">عن سامكو</h3>
+                        </div>
+                        <div onclick="navigate('schedule')" class="glass hover:bg-white/10 p-6 rounded-2xl cursor-pointer transition transform hover:scale-105 flex flex-col items-center justify-center text-center gap-2">
+                            <i class="fa-regular fa-calendar-check text-3xl text-yellow-400"></i>
+                            <h3 class="font-bold">جدولة</h3>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderGeneratorContent() {
+            return `
+                <div class="flex flex-col gap-6">
+                    <div class="glass p-6 rounded-2xl">
+                        <h2 class="text-xl font-bold mb-4">اختر نوع المحتوى</h2>
+                        <div class="flex gap-2 overflow-x-auto pb-2 custom-scroll">
+                            <button onclick="setTemplateCategory('ad')" class="px-4 py-2 rounded-lg ${state.currentTemplateCategory === 'ad' ? 'bg-blue-600' : 'bg-white/10'} transition whitespace-nowrap">إعلان 🔥</button>
+                            <button onclick="setTemplateCategory('cinematic')" class="px-4 py-2 rounded-lg ${state.currentTemplateCategory === 'cinematic' ? 'bg-purple-600' : 'bg-white/10'} transition whitespace-nowrap">سينمائي 🎥</button>
+                            <button onclick="setTemplateCategory('comedy')" class="px-4 py-2 rounded-lg ${state.currentTemplateCategory === 'comedy' ? 'bg-yellow-600' : 'bg-white/10'} transition whitespace-nowrap">كوميدي 😂</button>
+                            <button onclick="setTemplateCategory('education')" class="px-4 py-2 rounded-lg ${state.currentTemplateCategory === 'education' ? 'bg-green-600' : 'bg-white/10'} transition whitespace-nowrap">تعليمي 🧠</button>
+                            <button onclick="setTemplateCategory('quotes')" class="px-4 py-2 rounded-lg ${state.currentTemplateCategory === 'quotes' ? 'bg-pink-600' : 'bg-white/10'} transition whitespace-nowrap">اقتباسات ✨</button>
+                            <button onclick="setTemplateCategory('sports')" class="px-4 py-2 rounded-lg ${state.currentTemplateCategory === 'sports' ? 'bg-orange-600' : 'bg-white/10'} transition whitespace-nowrap">رياضة ⚽️</button>
+                            <button onclick="setTemplateCategory('tech')" class="px-4 py-2 rounded-lg ${state.currentTemplateCategory === 'tech' ? 'bg-cyan-600' : 'bg-white/10'} transition whitespace-nowrap">تقنية 💻</button>
+                            <button onclick="setTemplateCategory('food')" class="px-4 py-2 rounded-lg ${state.currentTemplateCategory === 'food' ? 'bg-red-500' : 'bg-white/10'} transition whitespace-nowrap">طبخ 🍔</button>
+                            <button onclick="setTemplateCategory('formal')" class="px-4 py-2 rounded-lg ${state.currentTemplateCategory === 'formal' ? 'bg-gray-600' : 'bg-white/10'} transition whitespace-nowrap">رسمي 📢</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Text Area -->
+                        <div class="glass-strong p-6 rounded-2xl border border-white/10 relative flex flex-col">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="font-bold text-gray-300">النص المقترح:</h3>
+                                <button onclick="generateNewCaption()" class="text-sm bg-white/10 px-3 py-1 rounded hover:bg-white/20"><i class="fa-solid fa-rotate"></i> توليد</button>
+                            </div>
+                            
+                            <div id="caption-output" class="bg-black/30 p-4 rounded-xl text-lg leading-loose min-h-[150px] whitespace-pre-line border border-white/5 focus-within:border-blue-500 transition mb-4" contenteditable="true">
+                                ${getRandomCaption(state.currentTemplateCategory)}
+                            </div>
+
+                            <!-- Formatting Toolbar -->
+                            <div class="flex flex-wrap items-center gap-2 mb-4 p-3 bg-white/5 rounded-xl border border-white/10">
+                                
+                                <!-- Font Family Dropdown -->
+                                <div class="relative">
+                                    <button id="font-btn" onclick="toggleFontMenu(event)" class="flex items-center gap-2 bg-black/20 hover:bg-black/40 px-3 py-2 rounded-lg text-sm transition min-w-[120px] justify-between">
+                                        <span id="font-btn-text" class="truncate">${state.settings.fontFamily}</span>
+                                        <i class="fa-solid fa-chevron-down text-xs opacity-50"></i>
+                                    </button>
+                                    <div id="font-menu" class="hidden absolute top-full right-0 mt-2 w-48 glass-strong rounded-xl shadow-2xl overflow-hidden z-[50] border border-white/10 max-h-60 overflow-y-auto">
+                                        ${fonts.map(f => `
+                                            <button onclick="setFont('${f.val}')" class="w-full text-right px-4 py-2 hover:bg-white/10 text-sm transition font-['${f.val}'] text-white block border-b border-white/5 last:border-0">
+                                                ${f.name}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+
+                                <!-- Font Size Slider -->
+                                <div class="flex items-center gap-2 flex-1 min-w-[120px] px-2">
+                                    <i class="fa-solid fa-text-height text-xs text-gray-400"></i>
+                                    <input type="range" min="20" max="150" value="${state.settings.fontSize}" oninput="setFontSize(this.value)" class="flex-1">
+                                    <span id="font-size-val" class="text-xs text-gray-400 w-8 text-center">${state.settings.fontSize}px</span>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-3 mt-auto">
+                                <button onclick="copyCaption()" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2 active:scale-95">
+                                    <i class="fa-regular fa-copy"></i> نسخ
+                                </button>
+                                <button onclick="saveCaption()" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2 active:scale-95">
+                                    <i class="fa-regular fa-bookmark"></i> حفظ
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Image Generation Area -->
+                        <div class="glass-strong p-6 rounded-2xl border border-white/10 flex flex-col items-center text-center">
+                            <h3 class="font-bold text-gray-300 mb-4 w-full text-right">معمل الصور (Nano Banana AI):</h3>
+                            
+                            <!-- Image Preview Container -->
+                            <div class="relative w-full bg-black/50 rounded-xl overflow-hidden mb-4 flex items-center justify-center group shadow-2xl border border-white/10 transition-all duration-300 ${state.settings.aspectRatio === '9:16' ? 'aspect-[9/16]' : state.settings.aspectRatio === '16:9' ? 'aspect-video' : state.settings.aspectRatio === '4:5' ? 'aspect-[4/5]' : 'aspect-square'}">
+                                <img id="image-preview" src="" class="w-full h-full object-cover hidden" alt="Generated Image">
+                                <div id="image-placeholder" class="text-gray-500">
+                                    <i class="fa-solid fa-image text-4xl mb-2"></i>
+                                    <p class="text-sm">اضغط "توليد صورة" لإنشاء تصميم</p>
+                                </div>
+                            </div>
+
+                             <!-- Aspect Ratio Selector -->
+                            <div class="flex gap-2 mb-4 w-full justify-center">
+                                <button onclick="setAspectRatio('1:1')" class="p-2 rounded-lg bg-white/5 hover:bg-white/20 border ${state.settings.aspectRatio === '1:1' ? 'border-yellow-400 text-yellow-400' : 'border-transparent text-gray-400'} transition flex flex-col items-center gap-1" title="مربع (انستقرام)">
+                                    <div class="w-4 h-4 border-2 border-current rounded-sm"></div>
+                                    <span class="text-[10px]">1:1</span>
+                                </button>
+                                <button onclick="setAspectRatio('4:5')" class="p-2 rounded-lg bg-white/5 hover:bg-white/20 border ${state.settings.aspectRatio === '4:5' ? 'border-yellow-400 text-yellow-400' : 'border-transparent text-gray-400'} transition flex flex-col items-center gap-1" title="بورتريه (فيسبوك)">
+                                    <div class="w-3 h-4 border-2 border-current rounded-sm"></div>
+                                    <span class="text-[10px]">4:5</span>
+                                </button>
+                                <button onclick="setAspectRatio('9:16')" class="p-2 rounded-lg bg-white/5 hover:bg-white/20 border ${state.settings.aspectRatio === '9:16' ? 'border-yellow-400 text-yellow-400' : 'border-transparent text-gray-400'} transition flex flex-col items-center gap-1" title="ستوري (تيك توك)">
+                                    <div class="w-2.5 h-4 border-2 border-current rounded-sm"></div>
+                                    <span class="text-[10px]">9:16</span>
+                                </button>
+                                <button onclick="setAspectRatio('16:9')" class="p-2 rounded-lg bg-white/5 hover:bg-white/20 border ${state.settings.aspectRatio === '16:9' ? 'border-yellow-400 text-yellow-400' : 'border-transparent text-gray-400'} transition flex flex-col items-center gap-1" title="عريض (يوتيوب)">
+                                    <div class="w-5 h-3 border-2 border-current rounded-sm"></div>
+                                    <span class="text-[10px]">16:9</span>
+                                </button>
+                            </div>
+
+                            <button onclick="triggerImageGen()" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 text-white font-bold py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2 active:scale-95 mb-2">
+                                <i class="fa-solid fa-wand-magic"></i> توليد صورة (مجاني)
+                            </button>
+                            <p class="text-xs text-gray-400 mb-2">النص والخطوط تطبق مباشرة على الصورة.</p>
+                            <button onclick="downloadImage()" class="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-2 rounded-xl transition text-sm">
+                                <i class="fa-solid fa-download"></i> تحميل الصورة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ... (Render Library, Favorites, Schedule, About remain same)
+        function renderLibraryContent() {
+            let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+            Object.keys(templates).forEach(cat => {
+                let catName = cat; 
+                if(cat==='ad') catName='إعلانات'; 
+                if(cat==='education') catName='تعليمي'; 
+                if(cat==='quotes') catName='اقتباسات';
+                if(cat==='sports') catName='رياضة';
+                if(cat==='tech') catName='تقنية';
+                if(cat==='food') catName='طبخ ومطاعم';
+                if(cat==='cinematic') catName='سينمائي';
+                if(cat==='comedy') catName='كوميدي';
+                if(cat==='formal') catName='رسمي';
+
+                html += `
+                    <div class="glass p-5 rounded-2xl">
+                        <h3 class="font-bold text-xl mb-3 text-yellow-400 border-b border-white/10 pb-2 capitalize">${catName}</h3>
+                        <div class="flex flex-col gap-3">
+                            ${templates[cat].map(t => `
+                                <div class="bg-black/20 p-3 rounded-lg text-sm flex justify-between items-start gap-2 group hover:bg-black/40 transition">
+                                    <p>${t.substring(0, 50)}...</p>
+                                    <button onclick="copyText('${t.replace(/'/g, "\\'")}')" class="text-gray-400 hover:text-white"><i class="fa-regular fa-copy"></i></button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function renderFavoritesContent() {
+            if (state.savedCaptions.length === 0) {
+                return `
+                    <div class="glass p-12 rounded-2xl text-center opacity-70">
+                        <i class="fa-regular fa-heart text-6xl mb-4"></i>
+                        <p>لم تحفظ شيئاً بعد.</p>
+                        <button onclick="navigate('generator')" class="mt-4 text-blue-400 underline">ابدأ التوليد</button>
+                    </div>`;
+            }
+            return `
+                <div class="flex flex-col gap-4">
+                    <h2 class="text-2xl font-bold mb-2">محفوظاتي (${state.savedCaptions.length})</h2>
+                    ${state.savedCaptions.map((cap, index) => `
+                        <div class="glass p-4 rounded-xl relative group">
+                            <p class="whitespace-pre-line mb-8 text-sm md:text-base">${cap.text}</p>
+                            <span class="absolute top-4 left-4 text-xs bg-white/10 px-2 py-1 rounded text-gray-300">${cap.date}</span>
+                            <div class="absolute bottom-3 left-3 flex gap-2">
+                                <button onclick="copyText(state.savedCaptions[${index}].text)" class="bg-green-500/20 hover:bg-green-500 text-green-300 hover:text-white px-3 py-1 rounded text-sm transition"><i class="fa-solid fa-copy"></i> نسخ</button>
+                                <button onclick="deleteCaption(${index})" class="bg-red-500/20 hover:bg-red-500 text-red-300 hover:text-white px-3 py-1 rounded text-sm transition"><i class="fa-solid fa-trash"></i> حذف</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>`;
+        }
+
+        function renderScheduleContent() {
+            return `
+                <div class="glass p-8 rounded-2xl flex flex-col items-center justify-center gap-6 text-center">
+                    <div class="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa-regular fa-clock text-5xl text-yellow-400"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold">جدولة المنشورات</h2>
+                    <p class="text-gray-300 max-w-md">نظم وقت نشر الكابشنات الخاصة بك بسهولة.</p>
+                    <div class="w-full max-w-md bg-black/30 p-4 rounded-xl border border-white/10 text-right">
+                        <label class="block text-sm mb-2 text-gray-400">عنوان</label>
+                        <input type="text" class="w-full bg-white/5 border border-white/10 rounded p-2 mb-4 text-white">
+                        <label class="block text-sm mb-2 text-gray-400">التاريخ</label>
+                        <input type="datetime-local" class="w-full bg-white/5 border border-white/10 rounded p-2 mb-4 text-white" style="color-scheme: dark;">
+                        <button onclick="showToast('تمت الجدولة!')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded transition">حفظ</button>
+                    </div>
+                </div>`;
+        }
+
+        function renderAboutContent() {
+            return `
+                <div class="flex flex-col gap-6">
+                    <div class="glass p-8 rounded-2xl text-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-yellow-400 to-red-500"></div>
+                        <h2 class="text-3xl font-bold mb-4">عن Samco Caption Lab</h2>
+                        <p class="text-gray-300 leading-relaxed max-w-2xl mx-auto">
+                            مختبر الكابشن هو أداة متكاملة صُممت خصيصاً لصناع المحتوى العرب. نؤمن بأن الكلمة والصورة هما روح الفيديو، 
+                            لذا قمنا بتطوير هذه المنصة لتجمع بين الإبداع البشري وقوة الذكاء الاصطناعي (Nano Banana Model) 
+                            لتوفير نصوص وصور جذابة في ثوانٍ.
+                        </p>
+                    </div>
+
+                    <div class="glass-strong p-8 rounded-2xl flex flex-col md:flex-row items-center gap-8">
+                        <div class="w-32 h-32 rounded-full bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center text-4xl shadow-2xl border-4 border-white/10">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <div class="text-center md:text-right flex-1">
+                            <h3 class="text-2xl font-bold mb-2 text-yellow-400">من هو Samco؟</h3>
+                            <p class="text-gray-300 mb-4">
+                                أنا مبرمج ومطور مواقع محترف، ومصمم مبدع، وكاتب قصص شغوف. 
+                                أسعى دائماً لدمج التكنولوجيا بالفن لتقديم تجارب مستخدم استثنائية. 
+                                "Samco Design" ليس مجرد اسم، بل هوية بصرية وتقنية تهدف للريادة.
+                            </p>
+                            <div class="flex gap-4 justify-center md:justify-start">
+                                <span class="bg-white/10 px-3 py-1 rounded-full text-sm">#تطوير_ويب</span>
+                                <span class="bg-white/10 px-3 py-1 rounded-full text-sm">#تصميم_UI/UX</span>
+                                <span class="bg-white/10 px-3 py-1 rounded-full text-sm">#كتابة_إبداعية</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function setTemplateCategory(cat) {
+            state.currentTemplateCategory = cat;
+            render();
+        }
+
+        function getRandomCaption(category) {
+            const temps = templates[category] || templates['ad'];
+            const tags = hashtags[category] || hashtags['ad'];
+            const randomCTA = ctas[Math.floor(Math.random() * ctas.length)];
+            const randomBody = temps[Math.floor(Math.random() * temps.length)];
+            return `${randomBody}\n.\n${randomCTA}\n.\n${tags}`;
+        }
+
+        function generateNewCaption() {
+            const output = document.getElementById('caption-output');
+            output.style.opacity = '0';
+            setTimeout(() => {
+                const text = getRandomCaption(state.currentTemplateCategory);
+                output.innerText = text;
+                output.style.opacity = '1';
+                // Auto generate image preview if requested? Or wait for button.
+            }, 200);
+        }
+
+        function triggerImageGen() {
+            // UPDATED: Now gets the CURRENT text from the editable div
+            const text = document.getElementById('caption-output').innerText;
+            // Removed the line splitting to use full text
+            document.getElementById('image-placeholder').classList.add('hidden');
+            generateCanvasImage(text);
+            showToast("تم توليد الصورة بنجاح! 🎨");
+        }
+
+        function copyCaption() {
+            copyText(document.getElementById('caption-output').innerText);
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => showToast("تم النسخ! 📋"))
+            .catch(() => {
+                const ta = document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast("تم النسخ!");
+            });
+        }
+
+        function saveCaption() {
+            state.savedCaptions.unshift({ text: document.getElementById('caption-output').innerText, date: new Date().toLocaleDateString('ar-SA') });
+            saveState();
+            showToast("تم الحفظ ❤️");
+        }
+
+        function deleteCaption(index) {
+            if(confirm('حذف؟')) { state.savedCaptions.splice(index, 1); saveState(); render(); }
+        }
+
+        // Init
+        window.onload = init;
+
+    </script>
+</body>
+</html>
